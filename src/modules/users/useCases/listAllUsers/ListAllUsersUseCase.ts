@@ -10,14 +10,17 @@ class ListAllUsersUseCase {
 
   execute({ user_id }: IRequest): User[] {
     // Complete aqui
-    const user = this.usersRepository.findById(user_id);
-    if (user) {
-      throw new Error("User aready exist!");
-    } else if (!user.admin) {
-      throw new Error("User aready not have premissio!");
-    }
 
-    return this.usersRepository.list();
+    const user = this.usersRepository.findById(user_id);
+    if (!user) {
+      throw new Error("User aready exist!");
+    } else {
+      if (!user.admin) {
+        throw new Error("User not have permission!");
+      }
+
+      return this.usersRepository.list();
+    }
 
   }
 }
