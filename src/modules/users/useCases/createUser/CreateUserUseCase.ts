@@ -17,10 +17,11 @@ class CreateUserUseCase {
       throw new Error("User already registered!")
     }
     const newUser = this.usersRepository.create({ name, email });
-    if (newUser) {
-      return newUser
+    if (!newUser) {
+      throw new Error("Salve user failed!")
     }
-    throw new Error("Salve user failed!")
+    return newUser;
+
   }
 }
 
